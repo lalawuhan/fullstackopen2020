@@ -18,7 +18,7 @@ const App = () => {
 
   useEffect(() => {
     blogService.getAll().then(blogs => {
-      console.log('blogs', blogs.map((blog) => blog.title))
+      // console.log('blogs', blogs.map((blog) => blog.title))
       setBlogs(blogs)
     }
 
@@ -28,10 +28,10 @@ const App = () => {
   const addPost = (blogObject) => {
     blogFormRef.current.toggleVisibility()
     blogService
-        .create(blogObject)
-        .then(returnedPost => {
-          setBlogs(blogs.concat(returnedPost))        }
-          )
+      .create(blogObject)
+      .then(returnedPost => {
+        setBlogs(blogs.concat(returnedPost))        }
+      )
   }
 
   useEffect(() => {
@@ -111,8 +111,8 @@ const App = () => {
         </div>
       }
       <h2>All blogs: </h2>
-      {blogs.map(blog =>
-        <div>
+      {blogs.map((blog, key) =>
+        <div key={key}>
           <p>{blog.title} written by {blog.author}. <a href={blog.url}>Read more</a></p>
         </div>
       )}

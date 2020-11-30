@@ -11,7 +11,7 @@ const BlogForm = ({ createPost }) => {
     setNewPost({
       ...newPost,
       [e.target.name]: e.target.value
-    });
+    })
   }
 
   const addPost = (e) => {
@@ -28,7 +28,7 @@ const BlogForm = ({ createPost }) => {
     <form onSubmit={addPost}>
       <label>
         Title:
-      <input
+        <input
           type="text"
           name="title"
           value={newPost.title}
@@ -37,7 +37,7 @@ const BlogForm = ({ createPost }) => {
       </label>
       <label>
         Author
-      <input
+        <input
           type="text"
           name="author"
           value={newPost.author}
@@ -46,7 +46,7 @@ const BlogForm = ({ createPost }) => {
       </label>
       <label>
         Url
-      <input
+        <input
           type="url"
           name="url"
           value={newPost.url}
