@@ -1,31 +1,38 @@
-import React, { useState, useEffect } from 'react'
-import Blog from './components/Blog'
+import React, { useState, useEffect, useRef } from 'react'
+// import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import Notification from "./components/Notification";
-
+import Toggleable from './components/Toggleable';
+import LoginForm from './components/Login'
+import BlogForm from './components/BlogForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [newPost, setNewPost] = useState({
-    title:'',
-    author:'',
-    url:''
-  })
-  // const [showAll, setShowAll] = useState(true)
+  const blogFormRef = useRef()
+
   const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
     blogService.getAll().then(blogs => {
-      console.log('blogs', blogs.map((blog)=> blog.title))
+      console.log('blogs', blogs.map((blog) => blog.title))
       setBlogs(blogs)
     }
 
     )
   }, [])
+
+  const addPost = (blogObject) => {
+    blogFormRef.current.toggleVisibility()
+    blogService
+        .create(blogObject)
+        .then(returnedPost => {
+          setBlogs(blogs.concat(returnedPost))        }
+          )
+  }
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogUser')
@@ -36,86 +43,25 @@ const App = () => {
     }
   }, [])
 
-  const addPost = (e) => {
-    e.preventDefault()
-    const blogObject = {
-      title: newPost.title,
-      author: newPost.author,
-      url: newPost.url,
-      user: user._id
-    }
-
-    blogService
-      .create(blogObject)
-      .then(returnedPost => {
-        setErrorMessage('Success, blog post added')
-        setBlogs(blogs.concat(returnedPost))
-        setNewPost('')
-      })
-  }
-
-  const handlePostChange = (e) => {
-    setNewPost({
-      ...newPost,
-      [e.target.name]: e.target.value
-    });
-    }
 
   const loginForm = () => (
-    <form onSubmit={handleLogin}>
-      <div>
-        username
-          <input
-          type="text"
-          value={username}
-          name="Username"
-          onChange={({ target }) => setUsername(target.value)}
-        />
-      </div>
-      <div>
-        password
-          <input
-          type="password"
-          value={password}
-          name="Password"
-          onChange={({ target }) => setPassword(target.value)}
-        />
-      </div>
-      <button type="submit">login</button>
-    </form>
+    <Toggleable buttonLabel='login' >
+      <LoginForm
+        username={username}
+        password={password}
+        handleUsernameChange={({ target }) => setUsername(target.value)}
+        handlePasswordChange={({ target }) => setPassword(target.value)}
+        handleSubmit={handleLogin}
+      />
+    </Toggleable>
   )
 
   const blogForm = () => (
-    <form onSubmit={addPost}>
-      <label>
-        Title:
-        <input
-          type="text"
-          name="title"
-          value={newPost.title}
-          onChange={handlePostChange}
-        />
-      </label>
-      <label>
-        Author
-        <input
-          type="text"
-          name="author"
-          value={newPost.author}
-          onChange={handlePostChange}
-        />
-      </label>
-      <label>
-        Url
-        <input
-          type="url"
-          name="url"
-          value={newPost.url}
-          onChange={handlePostChange}
-        />
-      </label>
-      <button type="submit">save</button>
-    </form>
+    <Toggleable buttonLabel="new post" ref={blogFormRef}>
+      <BlogForm
+        createPost={addPost}
+      />
+    </Toggleable>
   )
 
   const handleLogin = async (e) => {
@@ -153,8 +99,8 @@ const App = () => {
 
       {user === null ?
         <div>
-        <h2>Log in to application</h2>
-        {loginForm()}
+          <h2>Log in to application</h2>
+          {loginForm()}
         </div>
         :
         <div>
