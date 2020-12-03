@@ -1,8 +1,9 @@
 import React from 'react'
 
 const Blog = ({ blog }) => (
-  <div>
-    {blog.title} {blog.author}
+  <div className="blog-post">
+    <p>{blog.title}</p>
+    <p>{blog.author}</p>
   </div>
 )
 
