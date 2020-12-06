@@ -33,6 +33,7 @@ const BlogForm = ({ createPost }) => {
           name="title"
           value={newPost.title}
           onChange={handlePostChange}
+          id="title"
         />
       </label>
       <label>
@@ -42,6 +43,7 @@ const BlogForm = ({ createPost }) => {
           name="author"
           value={newPost.author}
           onChange={handlePostChange}
+          id="author"
         />
       </label>
       <label>
@@ -51,6 +53,7 @@ const BlogForm = ({ createPost }) => {
           name="url"
           value={newPost.url}
           onChange={handlePostChange}
+          id="url"
         />
       </label>
       <button type="submit">save</button>
