@@ -10,15 +10,27 @@ describe('Blog app', function () {
   it('login form works', function () {
     cy.contains('login').click()
   })
+  describe('Login', function () {
+    it('succeeds with correct credentials', function () {
+      cy.contains('login').click()
+      cy.get('#username').type('trial')
+      cy.get('#password').type('trial')
+      cy.get('#login-button').click()
 
-  it('user can login', function () {
-    cy.contains('login').click()
-    cy.get('#username').type('trial')
-    cy.get('#password').type('trial')
-    cy.get('#login-button').click()
+      cy.contains('trial logged-in')
+    })
 
-    cy.contains('trial logged-in')
+    it('fails with wrong credentials', function () {
+      cy.contains('login').click()
+      cy.get('#username').type('trial')
+      cy.get('#password').type('wrong')
+      cy.get('#login-button').click()
+      cy.contains('Wrong username or password')
+
+      cy.get('html').should('not.contain', 'trial logged-in')
+    })
   })
+
   describe('when logged in', function () {
     beforeEach(function () {
       cy.contains('login').click()
@@ -35,6 +47,7 @@ describe('Blog app', function () {
       cy.contains('save').click()
       cy.contains('a title created by cypress')
     })
+
   })
 
 })
