@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { createPost } from '../reducers/anecdoteReducer'
+import { createNotification, hideNotification } from '../reducers/notificationReducer'
 
 const AnecdoteForm = (props) => {
   const dispatch = useDispatch() // provides any React component access to the dispatch funtion of the redux store in index.js
@@ -10,6 +11,8 @@ const AnecdoteForm = (props) => {
     const content = event.target.post.value
     event.target.post.value = ''
     dispatch(createPost(content))
+    dispatch(createNotification(`New anecdote: ${content}`))
+    setTimeout(() => dispatch(hideNotification()), 5000)
   }
 
   return (

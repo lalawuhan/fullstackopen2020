@@ -15,10 +15,10 @@ const Anecdote = ({ anecdote, handleClick }) => {
     </div>
   )
 }
-const AnecdoteList = ({ post, handleClick }) => {
+const AnecdoteList = () => {
   const dispatch = useDispatch()
-  const anecdotes = useSelector(state => state) // component can access notes in the store with this hook
-
+  const anecdotes = useSelector(state => state.anecdotes) // component can access notes in the store with this hook
+  
   return (
     <div>
       <h2>Anecdotes</h2>
