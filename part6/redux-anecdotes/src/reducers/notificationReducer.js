@@ -43,6 +43,4 @@ export const hideNotification = () => {
     };
 };
 
-
-
 export default notificationReducer;
