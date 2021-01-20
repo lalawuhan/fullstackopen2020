@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux'
 import { createPost } from '../reducers/anecdoteReducer'
 import { createNotification, hideNotification } from '../reducers/notificationReducer'
 
-const AnecdoteForm = (props) => {
-  const dispatch = useDispatch() // provides any React component access to the dispatch funtion of the redux store in index.js
+const AnecdoteForm = () => {
+  const dispatch = useDispatch()
 
   const addPost = (event) => {
     event.preventDefault()
