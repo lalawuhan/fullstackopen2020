@@ -10,7 +10,7 @@ const Notification = () => {
   }
 
   return (
-    <div style={{ ...style, display: notification === '' ? 'none' : '' }}>
+    <div style={{ ...style, display: notification === null ? 'none' : '' }}>
       {notification}
     </div>
   )

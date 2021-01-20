@@ -1,20 +1,3 @@
-const initialState = {
-    message: "",
-};
-
-export const createNotification = (message) => {
-    return {
-        type: "CREATE_NOTIFICATION",
-        data: message,
-    };
-};
-
-export const hideNotification = () => {
-    return {
-        type: "HIDE_NOTIFICATION",
-    };
-};
-
 const notificationReducer = (state = initialState, action) => {
     switch (action.type) {
         case "CREATE_NOTIFICATION":
@@ -22,14 +5,44 @@ const notificationReducer = (state = initialState, action) => {
                 ...state,
                 message: action.data,
             };
-        case "HIDE_NOTIFICATION":
+        case "Restart":
             return {
                 ...state,
-                message: "",
-            };
+                message: null
+            }
         default:
             return state;
     }
 };
+const initialState = {
+    message: "",
+};
+
+let timeoutID;
+
+export const createNotification = (message, time) => {
+    return async dispatch => {
+        dispatch({
+            type: "CREATE_NOTIFICATION",
+            data: message,
+        })
+        if (timeoutID) {
+            clearTimeout(timeoutID)
+        }
+        timeoutID = setTimeout(() => {
+            dispatch({
+                type: 'Restart'
+            })
+        }, time * 1000)
+    }
+}
+
+export const hideNotification = () => {
+    return {
+        type: "HIDE_NOTIFICATION",
+    };
+};
+
+
 
 export default notificationReducer;
