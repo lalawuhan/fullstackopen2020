@@ -1,0 +1,47 @@
+{
+  "name": "exercise3",
+  "version": "1.0.0",
+  "description": "full stack open ex.3",
+  "main": "index.js",
+  "scripts": {
+    "start": "NODE_ENV=production node index.js",
+    "dev": "NODE_ENV=development nodemon index.js",
+    "test": "NODE_ENV=test jest --verbose --runInBand",
+    "build:ui": "rm -rf build && cd ../fullstackopen2020/part2/phonebook/ && npm run build --prod && cp -r build ../../fso-3",
+    "deploy": "git push heroku master",
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && npm run deploy",
+    "logs:prod": "heroku logs --tail",
+    "lint": "eslint .",
+    "start:test": "cross-env NODE_ENV=test node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lalawuhan/fso-3.git"
+  },
+  "author": "Thabi Segoe",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lalawuhan/fso-3/issues"
+  },
+  "homepage": "https://github.com/lalawuhan/fso-3#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.0",
+    "mongoose-unique-validator": "^2.0.3",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.12.1",
+    "jest": "^26.6.3",
+    "nodemon": "^2.0.4",
+    "supertest": "^6.0.1"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  }
+}
