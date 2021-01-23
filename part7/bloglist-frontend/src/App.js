@@ -16,8 +16,6 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  // const [notification, setNotification] = useState(null)
-
   const blogFormRef = React.createRef()
 
   useEffect(() => {
@@ -31,15 +29,6 @@ const App = () => {
     setUser(user)
   }, [])
 
-  // const notifyWith = (message, type='success') => {
-  //   setNotification({
-  //     message, type
-  //   })
-  //   setTimeout(() => {
-  //     setNotification(null)
-  //   }, 5000)
-  // }
-
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
@@ -52,12 +41,10 @@ const App = () => {
       setUser(user)
       console.log('user', user)
 
-      // notifyWith(`${user.name} welcome back!`)
       dispatch(showNotification(`${user.name} welcome back!`))
       console.log('user', user)
       storage.saveUser(user)
     } catch (exception) {
-      // notifyWith('wrong username/password', 'error')
       dispatch(showNotification('wrong username/password', 'error'))
     }
   }
@@ -67,7 +54,6 @@ const App = () => {
       const newBlog = await blogService.create(blog)
       blogFormRef.current.toggleVisibility()
       setBlogs(blogs.concat(newBlog))
-      // notifyWith(`a new blog '${newBlog.title}' by ${newBlog.author} added!`)
       dispatch(showNotification(`a new blog '${newBlog.title}' by ${newBlog.author} added!`))
     } catch (exception) {
       console.log(exception)
@@ -100,7 +86,6 @@ const App = () => {
       <div>
         <h2>login to application</h2>
 
-        {/* <Notification notification={notification} /> */}
         <Notification />
         <form onSubmit={handleLogin}>
           <div>
@@ -131,7 +116,6 @@ const App = () => {
     <div>
       <h2>blogs</h2>
 
-      {/* <Notification notification={notification} /> */}
       <Notification />
       <p>
         {user.name} logged in <button onClick={handleLogout}>logout</button>
