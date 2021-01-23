@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { showNotification } from './reducers/notificationsReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import { createPosts, initializePosts, removePost } from './reducers/blogsReducer'
+import { addUser } from './reducers/usersReducer'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
@@ -13,8 +14,7 @@ import storage from './utils/storage'
 
 const App = () => {
   const dispatch = useDispatch()
-  const blogs = useSelector(state => state.posts)
-  const [user, setUser] = useState(null)
+  const { blogs, user } = useSelector(state => { return { blogs: state.posts, user: state.users } })
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const blogFormRef = React.createRef()
@@ -25,7 +25,7 @@ const App = () => {
 
   useEffect(() => {
     const user = storage.loadUser()
-    setUser(user)
+    dispatch(addUser(user))
   }, [])
 
   const handleLogin = async (event) => {
@@ -37,11 +37,9 @@ const App = () => {
 
       setUsername('')
       setPassword('')
-      setUser(user)
-      console.log('user', user)
+      dispatch(addUser(user))
 
       dispatch(showNotification(`${user.name} welcome back!`))
-      console.log('user', user)
       storage.saveUser(user)
     } catch (exception) {
       dispatch(showNotification('wrong username/password', 'error'))
@@ -75,7 +73,7 @@ const App = () => {
   }
 
   const handleLogout = () => {
-    setUser(null)
+    dispatch(addUser(null))
     storage.logoutUser()
   }
 
