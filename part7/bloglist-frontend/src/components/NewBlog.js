@@ -1,4 +1,34 @@
 import React, { useState } from 'react'
+import styled from 'styled-components'
+
+const SmallButton = styled.button`
+  font-weight: bold;
+  width: fit-content;
+  background-color: #50a3a2;
+  color: white;
+  padding: 8px 12px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  &:hover {
+    background: #228a89;
+  }
+`
+const Input = styled.input`
+  width: 50em;
+  padding: 12px 20px;
+  margin: 8px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+`
+const Formwrapper = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
 
 const NewBlog = (props) => {
   const [title, setTitle] = useState('')
@@ -19,11 +49,10 @@ const NewBlog = (props) => {
 
   return (
     <div>
-      <h2>create new</h2>
-      <form onSubmit={handleNewBlog}>
+      <Formwrapper onSubmit={handleNewBlog}>
         <div>
           author
-          <input
+          <Input
             id='author'
             value={author}
             onChange={({ target }) => setAuthor(target.value)}
@@ -31,7 +60,7 @@ const NewBlog = (props) => {
         </div>
         <div>
           title
-          <input
+          <Input
             id='title'
             value={title}
             onChange={({ target }) => setTitle(target.value)}
@@ -39,14 +68,14 @@ const NewBlog = (props) => {
         </div>
         <div>
           url
-          <input
+          <Input
             id='url'
             value={url}
             onChange={({ target }) => setUrl(target.value)}
           />
         </div>
-        <button id="create">create</button>
-      </form>
+        <SmallButton id="create">create</SmallButton>
+      </Formwrapper>
     </div>
   )
 }
