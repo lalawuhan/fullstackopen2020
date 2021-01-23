@@ -9,9 +9,14 @@ const getConfig = () => {
   }
 }
 
-const getAll = () => {
-  const request = axios.get(baseUrl)
-  return request.then(response => response.data)
+const getAll = async () => {
+  try{
+    const response = await axios.get(baseUrl)
+    return response.data
+  }
+  catch(e) {
+    throw new Error(e)
+  }
 }
 
 const create = (blog) => {
