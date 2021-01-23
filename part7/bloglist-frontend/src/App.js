@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { showNotification } from './reducers/notificationsReducer'
 import { useDispatch, useSelector } from 'react-redux'
-import { createPosts, initializePosts } from './reducers/blogsReducer'
+import { createPosts, initializePosts, removePost } from './reducers/blogsReducer'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
@@ -60,17 +60,17 @@ const App = () => {
 
   const handleLike = async (id) => {
     const blogToLike = blogs.find(b => b.id === id)
+    console.log('id', blogToLike)
     const likedBlog = { ...blogToLike, likes: blogToLike.likes + 1, user: blogToLike.user.id }
     await blogService.update(likedBlog)
-    // setBlogs(blogs.map(b => b.id === id ? { ...blogToLike, likes: blogToLike.likes + 1 } : b))
+    dispatch(initializePosts())
   }
 
   const handleRemove = async (id) => {
     const blogToRemove = blogs.find(b => b.id === id)
     const ok = window.confirm(`Remove blog ${blogToRemove.title} by ${blogToRemove.author}`)
     if (ok) {
-      await blogService.remove(id)
-      // setBlogs(blogs.filter(b => b.id !== id))
+      dispatch(removePost(id))
     }
   }
 

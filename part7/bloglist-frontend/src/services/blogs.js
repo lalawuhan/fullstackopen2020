@@ -10,11 +10,11 @@ const getConfig = () => {
 }
 
 const getAll = async () => {
-  try{
+  try {
     const response = await axios.get(baseUrl)
     return response.data
   }
-  catch(e) {
+  catch (e) {
     throw new Error(e)
   }
 }
@@ -24,7 +24,8 @@ const create = (blog) => {
   return request.then(response => response.data)
 }
 
-const update = (blog) => {
+const update = async (blog) => {
+  console.log('update', blog)
   const request = axios.put(`${baseUrl}/${blog.id}`, blog, getConfig())
   return request.then(response => response.data)
 }

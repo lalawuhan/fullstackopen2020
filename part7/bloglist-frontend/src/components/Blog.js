@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
-const Blog = ({ blog, handleLike, handleRemove, own }) => {
+const Blog = ({ blog, handleLike, handleRemove }) => {
   const [visible, setVisible] = useState(false)
+  console.log('blog', blog)
+  const own = blog.user && blog.user.username === blog.user.username
 
   const blogStyle = {
     paddingTop: 10,
